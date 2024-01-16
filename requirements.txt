@@ -2,3 +2,4 @@ Flask~=2.2.5
 elastic-apm[flask]
 psutil
 gunicorn
+python-dotenv
