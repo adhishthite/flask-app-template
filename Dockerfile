@@ -22,4 +22,4 @@ EXPOSE 8000
 EXPOSE 80
 
 # Run app.py when the container launches
-CMD service nginx start && gunicorn --workers 21 app.app:app --bind unix:/app/app.sock
+CMD service nginx start && gunicorn --workers 8 app.app:app --bind unix:/app/app.sock
