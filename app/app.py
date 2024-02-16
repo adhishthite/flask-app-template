@@ -10,14 +10,15 @@ from . import data
 load_dotenv()
 
 app = Flask(__name__)
-app.config['ELASTIC_APM'] = {
-  'SERVICE_NAME': os.environ['SERVICE_NAME'],
-  'SECRET_TOKEN': os.environ['SECRET_TOKEN'],
-  'SERVER_URL': os.environ['SERVER_URL'],
-  'ENVIRONMENT': os.environ['ENVIRONMENT'],
-}
+if os.environ['ENVIRONMENT'] == 'production':
+    app.config['ELASTIC_APM'] = {
+      'SERVICE_NAME': os.environ['SERVICE_NAME'],
+      'SECRET_TOKEN': os.environ['SECRET_TOKEN'],
+      'SERVER_URL': os.environ['SERVER_URL'],
+      'ENVIRONMENT': os.environ['ENVIRONMENT'],
+    }
 
-apm = ElasticAPM(app)
+    apm = ElasticAPM(app)
 
 
 @app.route('/')

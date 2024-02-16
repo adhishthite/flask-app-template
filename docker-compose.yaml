@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+
+    container_name: app
+
+    ports:
+      - "80:80"
+
+    volumes:
+      - .:/app
+
+    environment:
+      - FLASK_ENV="development"
+      - SERVICE_NAME="flask-app-template"
+      - ENVIRONMENT="development"
+      - SECRET_TOKEN="secret-token"
+      - SERVER_URL="http://localhost:5000"
