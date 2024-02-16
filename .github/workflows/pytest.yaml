@@ -11,7 +11,8 @@ jobs:
 
     strategy:
         matrix:
-            python-version: [3.12]
+            python-version: ['3.12']
+            mongodb-version: ['7.0']
 
     timeout-minutes: 10
 
@@ -34,12 +35,16 @@ jobs:
           pip install -r requirements.txt
           pip install pytest-cov diff-cover
 
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.10.0
+
     - name: Run tests with PyTest
       env:
         SERVICE_NAME: "flask-app-template"
         ENVIRONMENT: "development"
         SECRET_TOKEN: "secret-token"
         SERVER_URL: "http://localhost:5000"
+        MONGO_URL: "localhost"
 
       run: |
         set -o pipefail

@@ -4,3 +4,5 @@ psutil
 gunicorn
 python-dotenv
 pytest
+redis
+pymongo

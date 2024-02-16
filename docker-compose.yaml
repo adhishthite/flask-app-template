@@ -1,10 +1,25 @@
-version: '3.8'
+version: '3.9'
 
 services:
+
+  mongo:
+    container_name: T_mongo
+    image: mongo:7.0
+
+    ports:
+      - "27017:27017"
+
+  redis:
+    container_name: T_redis
+    image: redis:6.0
+
+    ports:
+      - "6379:6379"
+
   app:
     build: .
 
-    container_name: app
+    container_name: T_app
 
     ports:
       - "80:80"
@@ -13,8 +28,18 @@ services:
       - .:/app
 
     environment:
-      - FLASK_ENV="development"
-      - SERVICE_NAME="flask-app-template"
-      - ENVIRONMENT="development"
-      - SECRET_TOKEN="secret-token"
-      - SERVER_URL="http://localhost:5000"
+      # General
+      FLASK_ENV: "development"
+      SERVICE_NAME: "app-template"
+      ENVIRONMENT: "development"
+      SECRET_TOKEN: "secret-token"
+      SERVER_URL: "http://localhost:5000"
+      ELASTIC_APM_ENABLED: "false"
+
+      # MongoDB and Redis
+      MONGO_URL: "mongo"
+      REDIS_HOST: "redis"
+
+    depends_on:
+      - mongo
+      - redis

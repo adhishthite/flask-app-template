@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask
+from flask import Flask, jsonify
 import elasticapm
 from elasticapm.contrib.flask import ElasticAPM
 from dotenv import load_dotenv
@@ -21,10 +21,16 @@ if os.environ['ENVIRONMENT'] == 'production':
     apm = ElasticAPM(app)
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 @elasticapm.capture_span()
 def hello_world():
-    return data.return_check()
+    return data.healthcheck()
+
+
+@app.route('/mongo_status', methods=['GET'])
+@elasticapm.capture_span()
+def mongo_status():
+    return jsonify(data.get_mongo_status()), 200
 
 
 if __name__ == '__main__':
